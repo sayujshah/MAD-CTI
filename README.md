@@ -1,2 +1,1 @@
-# MAD-CTI
-MAD-CTI: Multi-Agent Darknet Cyber Threat Intelligence
+# MAD-CTI: Multi-Agent Darknet Cyber Threat Intelligence
