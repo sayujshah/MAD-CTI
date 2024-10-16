@@ -2,3 +2,4 @@
 .env
 .cache
 __pycache__
+MAD_CTI_scraper.py
