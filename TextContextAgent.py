@@ -1,4 +1,6 @@
-from autogen import ConversableAgent, GroupChat, GroupChatManager, UserProxyAgent
+from autogen import ConversableAgent, AssistantAgent, GroupChat, GroupChatManager, UserProxyAgent, register_function
+from autogen.coding import LocalCommandLineCodeExecutor
+from csvWriterTool import csvWriterTool
  
 def TextContextAgent(llm_config, dataset):
     # Agent that translates each text from the dataset to English, if needed
@@ -33,7 +35,8 @@ def TextContextAgent(llm_config, dataset):
     decision_agent = ConversableAgent(
         name="DecisionAgent",
         system_message=
-        """You are an expert at ingesting analysis from another AI agent and coming up with a final decision/classification.
+        """
+        You are an expert at ingesting analysis from another AI agent and coming up with a final decision/classification.
         For each '__key__'-analysis pairing provided by the other AI agent, you will read the analysis and decide if the agent thinks the texts they analyzed are from a dark web forum and if they are from a specific forum post/conversation.
         For context, the agent read from a dataset of texts from dark web websites. You should not need to read these texts to make your determination since the analysis of these texts were already done for you.
         Based on the analyses, if you determine the text came from a dark web post/thread, apply the label 'Forum' and 'Not Forum' if otherwise.
@@ -41,6 +44,17 @@ def TextContextAgent(llm_config, dataset):
         Do NOT ask for any additional tasks, analysis, texts, etc.
         """,
         llm_config=llm_config
+    )
+    # Agent that records the classification output to a CSV file
+    recorder = AssistantAgent(
+        name="DataRecorder",
+        system_message=
+        """
+        You are proficient in accurately recording the results provided by other AI agents to a CSV file.
+        You will be provided a list of '__key__' values and their associated classification labels. Record these within 'output.csv' file.
+        The headers will be 'Key' for the '__key__' value and 'Label' for the classification label. Do NOT record any other text provided.
+        When you are done recording the data and saving the CSV file, output the word '$$$TERMINATE$$$' in the terminal.
+        """
     )
     # User proxy agent
     user = UserProxyAgent(
@@ -51,15 +65,25 @@ def TextContextAgent(llm_config, dataset):
         code_execution_config=False,
         max_consecutive_auto_reply=10
     )
+    
+    # Register a CSV Writer tool for the recorder agent
+    register_function(
+        csvWriterTool,
+        caller=decision_agent,
+        executor=recorder,
+        name="csvWriterTool",
+        description="Allows for the writing of data to a CSV file"
+    )
 
     # Descriptions of each agent fed to other agents for background of their respective role
     translator.description = "A translator agent that is proficient in converting any language into English"
     text_analyzer.description = "A specialist in identifying structured dark web forum conversation patterns"
     decision_agent.description = "An expert at ingesting analysis from other AI agents and coming up with a final decision/classification"
-    
+    recorder.description = "An agent that is proficient in recording output data into CSV files"
+
     # Set up a GroupChat for the agents to interact. Specify which specific agents can follow another.
     groupchat = GroupChat(
-        agents=[user, translator, text_analyzer, decision_agent],
+        agents=[user, translator, text_analyzer, decision_agent, recorder],
         speaker_selection_method='auto',
         messages=[],
         send_introductions=True,
@@ -68,7 +92,8 @@ def TextContextAgent(llm_config, dataset):
             user: [translator, text_analyzer, decision_agent],
             translator: [text_analyzer],
             text_analyzer: [decision_agent],
-            decision_agent: [user]
+            decision_agent: [recorder],
+            recorder: [user]
         }
     )
     # GroupChatManager to manage the flow of conversation
