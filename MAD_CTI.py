@@ -5,7 +5,7 @@ load_dotenv()
 from Agents.TextAnalyzerAgent import TextAnalyzerAgent
 from Agents.RelevanceAgent import RelevanceAgent
 from Agents.CategoryAgent import CategoryAgent
-from csvWriterTool import csvWriterTool
+from Tools.csvWriterTool import csvWriterTool
 
 from datasets import load_dataset
 
