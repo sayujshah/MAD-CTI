@@ -2,9 +2,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-from TextAnalyzerAgent import TextAnalyzerAgent
-from RelevanceAgent import RelevanceAgent
-from CategoryAgent import CategoryAgent
+from Agents.TextAnalyzerAgent import TextAnalyzerAgent
+from Agents.RelevanceAgent import RelevanceAgent
+from Agents.CategoryAgent import CategoryAgent
 from csvWriterTool import csvWriterTool
 
 from datasets import load_dataset
