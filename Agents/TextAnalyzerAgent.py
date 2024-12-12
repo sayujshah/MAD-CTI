@@ -1,5 +1,6 @@
 from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
- 
+
+# Agent that translates and analyzes underlying dark web text
 def TextAnalyzerAgent(llm_config, dataset):
     translator = AssistantAgent(
         name="Translator",
@@ -86,9 +87,11 @@ def TextAnalyzerAgent(llm_config, dataset):
         max_consecutive_auto_reply=1
     )
 
+    # Create group chat to allow agents to communicate with one another
     gc = GroupChat(agents=[user,translator, text_analyzer], messages=[], allow_repeat_speaker=False, max_round=3)
     gcm = GroupChatManager(groupchat=gc, llm_config=llm_config)
 
+    # Provide initial task to kickstart group chat
     user.initiate_chat(
         recipient=gcm,
         message=f"""
@@ -99,6 +102,7 @@ def TextAnalyzerAgent(llm_config, dataset):
         summary_method="last_msg"
     )
 
+    # Pull final agent output as the analysis
     analysis = gcm.groupchat.messages[-1]["content"]
     
     return analysis

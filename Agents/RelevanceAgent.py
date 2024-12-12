@@ -1,15 +1,16 @@
 from autogen import AssistantAgent, UserProxyAgent
  
+# Agent designed to classify a given text as "Relevant" or "Not Relevant" based on the anlaysis provided by the Text Analyzer Agent
 def RelevanceAgent(llm_config, analysis):
     relevance_agent = AssistantAgent(
         name="RelevanceAgent",
         system_message=
         """
         ROLE:
-        You are an expert in interpreting analysis from other AI agents to determine the relevancy of text based on a defined use case.
+        You are an expert in interpreting analysis of a text to determine the relevancy of text based on a defined use case.
 
         TASKS:
-        You will receive a '__key__' and its corresponding analysis from another AI agent. Your job is to read the analysis and determine whether the text described in the analysis is from a dark web forum, blog post, or article. You are not required to read the original text. The analysis provided contains all the information you need.
+        You will receive a '__key__' and its corresponding analysis that another AI agent produced. Your job is to read the analysis and determine whether the text described in the analysis is from a dark web forum, blog post, or article. You are not required to read the original text. The analysis provided contains all the information you need.
 
             1. Relevance Determination:
                 - If the analysis indicates that the text resembles a dark web forum post, blog post, or article, label it as 'Relevant'.
@@ -36,7 +37,7 @@ def RelevanceAgent(llm_config, analysis):
             - If you have already labeled a text in the past, do not repeat the label for that key.
             - Perform your task once and do not request further tasks or input.
             - Do not repeat your task or analysis.
-            - Return only the __key__ and the classification labels as requested.
+            - Return only the __key__ and the classification labels as requested. No other characters should be included in your output.
         """,
         llm_config=llm_config
     )
@@ -48,12 +49,16 @@ def RelevanceAgent(llm_config, analysis):
         code_execution_config=False,
         max_consecutive_auto_reply=1
     )
+
+    # Initiate agent by feeding analysis from Text Analyzer Agent
     chat = user.initiate_chat(relevance_agent,
                     message = f"""
                     Based on the following analysis of a darkweb page extract, determine the relevancy of the underlying text.
                     \nANALYSIS:
                     \n{analysis}
                     """, max_turns=1)
+    
+    # Extract the __key__ and classification label from the agent output
     results = chat.summary.split(",")
 
     return results

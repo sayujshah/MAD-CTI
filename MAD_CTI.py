@@ -5,11 +5,9 @@ load_dotenv()
 from Agents.TextAnalyzerAgent import TextAnalyzerAgent
 from Agents.RelevanceAgent import RelevanceAgent
 from Agents.CategoryAgent import CategoryAgent
-from csvWriterTool import csvWriterTool
+from Tools.csvWriterTool import csvWriterTool
 
 from datasets import load_dataset
-
-from time import time
 
 llm_config = {
     'config_list':
@@ -25,7 +23,6 @@ os.getenv('HF_TOKEN')
 ds = load_dataset("s2w-ai/CoDA", split="train")
 ds_filtered = ds.filter(lambda data: "Hacking" in data['__key__'])
 
-start = time()
 for i in range(len(ds_filtered)):
     analysis = TextAnalyzerAgent(llm_config, ds_filtered[i])
     relevancy_results = RelevanceAgent(llm_config, analysis)
@@ -39,6 +36,3 @@ for i in range(len(ds_filtered)):
         label1 = "Relevant"
         label2 = category_results[1]
     csvWriterTool([[key,label1,label2]])
- 
-end = time()
-print(end-start)
