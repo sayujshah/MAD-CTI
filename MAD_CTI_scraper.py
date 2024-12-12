@@ -8,6 +8,7 @@ from Agents.CategoryAgent import CategoryAgent
 from Tools.csvWriterTool import csvWriterTool
 from Tools.darkWebScraperTool import darkWebScraperTool
 
+# Configure LLM setup
 llm_config = {
     'config_list':
     [
@@ -28,9 +29,11 @@ while True:
     except ValueError:
         print("Invalid URL. Make sure you are inputting a dark web .onion URL only.")
 
+# Scrape the provided URL's text
 text = darkWebScraperTool(onion_link)
 ds = {"__key__": onion_link, "txt": text}
 
+# Multi-agent workflow
 analysis = TextAnalyzerAgent(llm_config, ds)
 relevancy_results = RelevanceAgent(llm_config, analysis)
 key = relevancy_results[0]

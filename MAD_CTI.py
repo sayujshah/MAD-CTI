@@ -9,6 +9,7 @@ from Tools.csvWriterTool import csvWriterTool
 
 from datasets import load_dataset
 
+# Configure LLM setup
 llm_config = {
     'config_list':
     [
@@ -19,10 +20,12 @@ llm_config = {
     ]
 }
 
+# Connect to CoDA DB via HuggingFace API
 os.getenv('HF_TOKEN')
 ds = load_dataset("s2w-ai/CoDA", split="train")
 ds_filtered = ds.filter(lambda data: "Hacking" in data['__key__'])
 
+# Multi-agent workflow
 for i in range(len(ds_filtered)):
     analysis = TextAnalyzerAgent(llm_config, ds_filtered[i])
     relevancy_results = RelevanceAgent(llm_config, analysis)
