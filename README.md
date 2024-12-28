@@ -1,6 +1,6 @@
 # MAD-CTI: Multi-Agent Dark Web Cyber Threat Intelligence
 
-This repository is the official code implementation for the paper _MAD-CTI: Multi-Agent Dark Web Cyber Threat Intelligence_ by Sayuj Shah and Vijay Madisetti.
+This repository is the official code implementation for the paper _MAD-CTI: Cyber Threat Intelligence Analysis of the Dark Web Using a Multi-Agent Framework_ by Sayuj Shah and Vijay Madisetti.
 
 ## Quickstart
 
