@@ -1,6 +1,6 @@
 # MAD-CTI: Multi-Agent Dark Web Cyber Threat Intelligence
 
-This repository is the official code implementation for the paper _MAD-CTI: Cyber Threat Intelligence Analysis of the Dark Web Using a Multi-Agent Framework_ by Sayuj Shah and Vijay Madisetti.
+This repository is the official code implementation for the published paper [_MAD-CTI: Cyber Threat Intelligence Analysis of the Dark Web Using a Multi-Agent Framework_](https://ieeexplore.ieee.org/document/10908603) by Sayuj Shah and Vijay Madisetti.
 
 ## Quickstart
 
@@ -33,18 +33,19 @@ The basic architecture of the multi-agent workflow can be found below. MAD-CTI u
 
 ## Citing
 
-If you make use of ThreatCrawl in your work, please cite the following paper:
+If you make use of MAD-CTI in your work, please cite the following paper:
 
 ```
-@misc{shah2024madcti,
-      title={MAD-CTI: Multi-Agent DarkWeb Cyber Threat Intelligence}, 
-      author={Sayuj Shah and Vijay Madisetti},
-      year={2024},
-      eprint={},
-      archivePrefix={},
-      primaryClass={},
-      url={}, 
-}
+@ARTICLE{10908603,
+  author={Shah, Sayuj and Madisetti, Vijay K.},
+  journal={IEEE Access}, 
+  title={MAD-CTI: Cyber Threat Intelligence Analysis of the Dark Web Using a Multi-Agent Framework}, 
+  year={2025},
+  volume={13},
+  number={},
+  pages={40158-40168},
+  keywords={Dark Web;Cyber threat intelligence;Malware;Translation;Oral communication;Computer hacking;Blogs;Accuracy;Large language models;Computer architecture;Cybersecurity defense;cyber threat intelligence;dark web;hack;large language models (LLMs);malware;multi-agent systems (MAS);predictive intelligence;vulnerability},
+  doi={10.1109/ACCESS.2025.3547172}}
 ```
 
 ## Contributors
@@ -55,27 +56,3 @@ If you make use of ThreatCrawl in your work, please cite the following paper:
 ## Acknowledgements
 
 This work was supported by the School of Cybersecurity and Privacy and the College of Computing at Georgia Institute of Technology.
-
-## License
-
-MIT License
-
-Copyright (c) 2024 Sayuj Shah
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
