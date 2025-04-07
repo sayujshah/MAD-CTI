@@ -18,6 +18,7 @@ We have included all files used during experiment implementation. To replicate o
 ```
 python MAD_CTI_CoDA.py
 ```
+
 ### Using MAD-CTI With Web Scraper
 
 To use the MAD-CTI tool with a dark web scraper, ensure [Tor](https://www.torproject.org/) is properly isntalled on your device and the SocksPort is configured as detailed in the [requests-tor documentation](https://pypi.org/project/requests-tor/). Once this is complete, set your .env variables with you OpenAI and HuggingFace API tokens, along with your torrc hashed control password and run:
